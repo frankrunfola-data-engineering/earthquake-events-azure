@@ -2,6 +2,8 @@
 
 This guide walks you through creating a scalable data pipeline in Azure, transforming raw data into meaningful insights using Databricks, Azure Data Factory (ADF), and Synapse Analytics.
 
+![Data Engineering vs Software Engineering (6)](https://github.com/user-attachments/assets/bdadd2e0-89be-4683-b53b-fe331be6f6bf)
+
 ## **Who Should Use This Guide**
 
 - Beginner to Intermediate Data Engineers.
