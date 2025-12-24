@@ -67,6 +67,7 @@ This guide walks you through creating a scalable data pipeline in Azure, transfo
      - [X] Terminate after 20 minutes
    5. Click `Create compute`
   <br/>
+  
   ![](./RBAC.png)
   <br/>
 
