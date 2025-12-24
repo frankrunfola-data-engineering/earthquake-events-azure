@@ -4,20 +4,11 @@
 
 This guide walks you through creating a scalable data pipeline in Azure, transforming raw data into meaningful insights using Databricks, Azure Data Factory (ADF), and Synapse Analytics.
 
-![Data Engineering vs Software Engineering (6)](https://github.com/user-attachments/assets/bdadd2e0-89be-4683-b53b-fe331be6f6bf)
-
-## Diagrams
-![](./RBAC.png)
-
-
 ## **What You’ll Learn**
   1. Configure Azure Databricks and securely access data in Azure Storage.
   2. Process and transform data using Databricks notebooks (`bronze`, `silver`, `gold`).
   3. Automate data pipelines with Azure Data Factory.
   4. Query and optimize data in Synapse Analytics for analytics and visualization.
-
-## **Estimated Time to Complete**
- - 2–4 hours, depending on familiarity with Azure services.
 
 ## **Technologies Used**
  - Azure Databricks
@@ -25,6 +16,7 @@ This guide walks you through creating a scalable data pipeline in Azure, transfo
  - Azure Synapse Analytics
    
 ---
+<br/>
 
 # Steps
 
@@ -33,6 +25,7 @@ This guide walks you through creating a scalable data pipeline in Azure, transfo
   - Workspace name: `earthquake-db`
   - Region: `East US`
   - Click `Create`
+<br/>
 
 ## 2) Create Resource - Storage Account (ADLS Gen2)
   - Resource Group: `rg-earthquake`
@@ -42,9 +35,10 @@ This guide walks you through creating a scalable data pipeline in Azure, transfo
   - Redundancy: `Locally-redundant strage (LRS)` (Cheapest)
   - Click `Create`
 
-  ### A) Create Storage Account Containers
+  ### Create Storage Account Containers
    - **Data Storage** → **Containers**
    - Create 3 Containers (Bronze, Silver, Gold)
+<br/>
 
 ## 3) Create Resource - Synapse workspace
   - Resource Group: `rg-earthquake`
@@ -55,6 +49,7 @@ This guide walks you through creating a scalable data pipeline in Azure, transfo
     - File system name: `synapse-fs` (New)
     - [X] Assign myself the Storage Bloc Data Contributor on ADLS Gen2
   - Click `Create`
+<br/>
 
 ## 4) Databricks Deployment
   - Enter Databricks workspace `earthquake-db`
@@ -62,18 +57,49 @@ This guide walks you through creating a scalable data pipeline in Azure, transfo
     - `Workspace`: Store/Create Notebooks
     - `Catalog`:   Connect ADLS storage to be maniupulate
     - `Compute`:   Notebooks run here
-  ### A) Create Compute instance
-   - Click create
-   - Policy: `Unrestricted` - `Single Node`
-   - Access mode: `Single user`
-   - Performance
+   ### Create Compute instance
+   1. Click create
+   2. Policy: `Unrestricted` - `Single Node`
+   3. Access mode: `Single user`
+   4. Performance
      - [ ] Use Photon Acceleration (Not needed)
      - Node type: `General purpose` lowest (ie 14 GB Memory, 4 Cores)
      - [X] Terminate after 20 minutes
-   - Click `Create compute`
+   5. Click `Create compute`
+<br/>
 
-## 5)
-  ### Create a Credential
-  - `Catalog` → `External Data` → `Credential` → `Create credential`
-  - Credential type: `Azure Managed Identity`
-  - 
+## 5) Setup Secure Connection(ADB <==> ADLS)
+  ### Create a Credential (to be used for an external location)
+  1. `Catalog` → `External Data` → `Credential` → `Create credential`
+  2. Credential type: `Azure Managed Identity`
+  3. Credential name: `earthqual-cred`
+  4. Access connector ID: `/subscriptions/ca8b577e-..accessConnectors/unity-catalog-access-connector` (**FOUND BELOW**)
+     - Azure portal → `rg-earthquake`(resource group) → `earthquake-db` (db resource) → Managed Resource Group: `databricks-rg-earthquake-<unique>` → `unity-catalog-access-connector`
+     - COPY Resource ID : `/subscriptions/ca8b577e-..accessConnectors/unity-catalog-access-connector`
+
+  ### Create External Location
+  1. `Catalog` → `External Data` → `Create external location`
+  2. External location name: `bronze`
+  3. External location name: `abfss://bronze@storeearthquake.dfs.core.windows.net/` (**endpoint to ADLS container**)
+  4. Storage Credential: `earthqual-cred` (from 5.3)
+<br/>
+
+
+<br/>
+
+
+<br/>
+
+
+<br/>
+
+
+<br/>
+
+
+
+
+![Data Engineering vs Software Engineering (6)](https://github.com/user-attachments/assets/bdadd2e0-89be-4683-b53b-fe331be6f6bf)
+
+## Diagrams
+![](./RBAC.png)
