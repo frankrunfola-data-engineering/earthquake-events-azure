@@ -437,6 +437,9 @@ df_with_location_sig_class.write.mode('append').parquet(gold_output_path)
  1. Azure portal → `storage accont` → `Data storage` → `Containers` → `gold` → `earthquake_events_gold`
  2. New parquee file created **part-00000-tid-8139..**
 <br/>
+
+![](./parquee-files-in-gold.png)
+<br/>
 <br/>
 
 ## 10) Data Factory Architecture 
