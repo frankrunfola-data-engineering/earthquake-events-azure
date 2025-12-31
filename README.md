@@ -48,9 +48,8 @@ We implement a **medallion architecture** to structure and organize data effecti
 - **Actionable Insights**: Provides stakeholders with ready-to-use data for informed decision-making.
 
 ---
-<br/>
 
-# Steps
+## Steps
 
 ## 1) Create Resource - Databricks
   1. Create a new Azure Data Factory instance
