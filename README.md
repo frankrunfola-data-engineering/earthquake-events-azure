@@ -84,7 +84,8 @@ This guide walks you through creating a scalable data pipeline in Azure, transfo
   4. Access connector ID: `/subscriptions/ca8b577e-..accessConnectors/unity-catalog-access-connector` (**FOUND BELOW**)
      - Azure portal → `rg-earthquake`(resource group) → `earthquake-db` (db resource) → Managed Resource Group: `databricks-rg-earthquake-<unique>` → `unity-catalog-access-connector`
      - COPY Resource ID : `/subscriptions/ca8b577e-..accessConnectors/unity-catalog-access-connector`
-  <br/>  
+  <br/>
+  
   ![](./sec-db.png)
   <br/>
   <br/>
@@ -438,7 +439,8 @@ df_with_location_sig_class.write.mode('append').parquet(gold_output_path)
 <br/>
 
 ## 10) Data Factory Architecture 
-  <br/>  
+  <br/> 
+  
   ![](./sec-db-to-df.png)
   <br/>
   <br/>
