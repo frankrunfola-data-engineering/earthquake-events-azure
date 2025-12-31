@@ -72,11 +72,11 @@ This guide walks you through creating a scalable data pipeline in Azure, transfo
 <br/>
 
 ## 5) Security Architecture
-  ![](./RBAC.png)
+  ![](./sec-db-to-sa.png)  
   <br/>
   <br/>
 
-## 6) Setup Secure Connection for Databricks (ADLS -----> ADB)
+## 6) Setup Secure Connection for Databricks (DB <----- ADLS)
   ### Create a Credential (to be used for an external location)
   1. `Catalog` → `External Data` → `Credential` → `Create credential`
   2. Credential type: `Azure Managed Identity`
@@ -84,9 +84,8 @@ This guide walks you through creating a scalable data pipeline in Azure, transfo
   4. Access connector ID: `/subscriptions/ca8b577e-..accessConnectors/unity-catalog-access-connector` (**FOUND BELOW**)
      - Azure portal → `rg-earthquake`(resource group) → `earthquake-db` (db resource) → Managed Resource Group: `databricks-rg-earthquake-<unique>` → `unity-catalog-access-connector`
      - COPY Resource ID : `/subscriptions/ca8b577e-..accessConnectors/unity-catalog-access-connector`
-  <br/>
-  
-  ![](./Credential.png)
+  <br/>  
+  ![](./sec-db.png)
   <br/>
   <br/>
   
@@ -112,7 +111,7 @@ This guide walks you through creating a scalable data pipeline in Azure, transfo
   <br/>
 
 
-## 7) Setup Secure Connection for ADLS (ADLS <----- ADB)
+## 7) Setup Secure Connection for ADLS (DB -----> ADLS)
   1. Azure portal → `storage accont` → `Access Control (IAM)` → `Role assignments` → `Add` 
   2. `Role` → Job function role: **Storage Blob Data Contributor**
   3. `Members` → Assigned access to: **Managed identity**
@@ -120,6 +119,8 @@ This guide walks you through creating a scalable data pipeline in Azure, transfo
      - Managed identity: **Access Connector for Azure Databricks**
      - Select: **unity-catalog-access-connector**
   5. `Select` → `Review and Assign`
+<br/>
+![](./sec-sa.png)
 <br/>
 <br/>
 
@@ -436,9 +437,11 @@ df_with_location_sig_class.write.mode('append').parquet(gold_output_path)
 <br/>
 <br/>
 
-## 10)
-<br/>
-<br/>
+## 10) Data Factory Architecture 
+  <br/>  
+  ![](./sec-db-to-df.png)
+  <br/>
+  <br/>
 
 
 
