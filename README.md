@@ -59,7 +59,7 @@ We implement a **medallion architecture** to structure and organize data effecti
     - Workspace name: `earthquake-db`
     - Region: `East US`
   2. Click `Create`
-<br/>
+
 
 ## 2) Create Resource - Storage Account (ADLS Gen2)
    1. Create a new Storage Account instance
@@ -73,7 +73,7 @@ We implement a **medallion architecture** to structure and organize data effecti
   ### Create Storage Account Containers
    - **Data Storage** → **Containers**
    - Create 3 Containers (Bronze, Silver, Gold)
-<br/>
+
 
 ## 3) Create Resource - Synapse workspace
   - Resource Group: `rg-earthquake`
@@ -84,7 +84,7 @@ We implement a **medallion architecture** to structure and organize data effecti
     - File system name: `synapse-fs` (New)
     - [X] Assign myself the Storage Bloc Data Contributor on ADLS Gen2
   2. Click `Create`
-<br/>
+
 
 ## 4) Create Resource - Azure Data Factory (ADF)
   1. Create a new Azure Data Factory instance
