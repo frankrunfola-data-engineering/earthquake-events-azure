@@ -72,7 +72,7 @@ This guide walks you through creating a scalable data pipeline in Azure, transfo
 <br/>
 
 ## 5) Security Architecture
-  ![](./sec-db-to-sa.png)  
+  ![](./sec-db-to-sa-and-df.png)  
   <br/>
   <br/>
 
