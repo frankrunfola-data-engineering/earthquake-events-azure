@@ -92,7 +92,7 @@ We implement a **medallion architecture** to structure and organize data effecti
     - Workspace name: `df-earthquake`
     - Region: `East US`
   2. Click `Create`
-<br/>
+
 
 ## 5) Databricks Deployment
   - Launch Databricks workspace `earthquake-db`
@@ -112,14 +112,11 @@ We implement a **medallion architecture** to structure and organize data effecti
 <br/>
 
 ![](./Compute.png)
-<br/>
-<br/>
+
 
 
 ## 6) Security Architecture
   ![](./sec-db-to-sa-and-df.png)  
-  <br/>
-  <br/>
 
 ## 7) Setup Secure Connection for Databricks (DB <----- ADLS)
   ### Create a Credential (to be used for an external location)
@@ -129,11 +126,10 @@ We implement a **medallion architecture** to structure and organize data effecti
   4. Access connector ID: `/subscriptions/ca8b577e-..accessConnectors/unity-catalog-access-connector` (**FOUND BELOW**)
      - Azure portal → `rg-earthquake`(resource group) → `earthquake-db` (db resource) → Managed Resource Group: `databricks-rg-earthquake-<unique>` → `unity-catalog-access-connector`
      - COPY Resource ID : `/subscriptions/ca8b577e-..accessConnectors/unity-catalog-access-connector`
-  <br/>
-  
-  ![](./sec-db.png)
-  <br/>
-  <br/>
+<br/>
+
+![](./sec-db.png)
+
   
   ### Create External Locations
   1. `Catalog` → `External Data` → `Create external location`
@@ -153,8 +149,6 @@ We implement a **medallion architecture** to structure and organize data effecti
   <br/>
   
   ![](./ExternalLocations.png)
-  <br/>
-  <br/>
 
 
 ## 8) Setup Secure Connection for ADLS (DB -----> ADLS)
@@ -168,8 +162,7 @@ We implement a **medallion architecture** to structure and organize data effecti
 <br/>
 
 ![](./sec-sa.png)
-<br/>
-<br/>
+
 
 ## 9) Set Up Databricks
 1. Azure portal → Launch Databricks workspace `earthquake-db`
@@ -484,8 +477,7 @@ df_with_location_sig_class.write.mode('append').parquet(gold_output_path)
 <br/>
 
 ![](./parquee-files-in-gold.png)
-<br/>
-<br/>
+
 
 ## 11) Datafactory Deployment
   1. Launch the ADF studio and create a pipeline:
@@ -501,11 +493,10 @@ df_with_location_sig_class.write.mode('append').parquet(gold_output_path)
 
 
 ## 10) Data Factory Architecture 
-  <br/> 
+<br/>
   
   ![](./sec-db-to-df.png)
-  <br/>
-  <br/>
+
 
 
 
