@@ -1,11 +1,11 @@
-# Data Engineering Tutorial: From Raw Data to Azure Synapse Analytics
+# **Data Engineering Tutorial: From Raw Data to Azure Synapse Analytics**
 
 ## Introduction
 
 This guide walks you through creating a scalable data pipeline in Azure, transforming raw data into meaningful insights using Databricks, Azure Data Factory (ADF), and Synapse Analytics.
 <br/>
 
-![](./flow.png)
+![](./images/flow.png)
 
 ## **What You’ll Learn**
   1. Configure Azure Databricks and securely access data in Azure Storage.
@@ -49,8 +49,9 @@ We implement a **medallion architecture** to structure and organize data effecti
 - **Scalability**: Handles large volumes of data seamlessly using Azure services.
 - **Actionable Insights**: Provides stakeholders with ready-to-use data for informed decision-making.
 
+<br/>
 
-# Steps
+# **Steps**
 
 ## 1) Create Resource - Databricks
   1. Create a new Azure Data Factory instance
@@ -59,6 +60,7 @@ We implement a **medallion architecture** to structure and organize data effecti
     - Region: `East US`
   2. Click `Create`
 
+<br/>
 
 ## 2) Create Resource - Storage Account (ADLS Gen2)
    1. Create a new Storage Account instance
@@ -73,6 +75,7 @@ We implement a **medallion architecture** to structure and organize data effecti
    - **Data Storage** → **Containers**
    - Create 3 Containers (Bronze, Silver, Gold)
 
+<br/>
 
 ## 3) Create Resource - Synapse workspace
   - Resource Group: `rg-earthquake`
@@ -84,6 +87,7 @@ We implement a **medallion architecture** to structure and organize data effecti
     - [X] Assign myself the Storage Bloc Data Contributor on ADLS Gen2
   2. Click `Create`
 
+<br/>
 
 ## 4) Create Resource - Azure Data Factory (ADF)
   1. Create a new Azure Data Factory instance
@@ -92,6 +96,7 @@ We implement a **medallion architecture** to structure and organize data effecti
     - Region: `East US`
   2. Click `Create`
 
+<br/>
 
 ## 5) Databricks Deployment
   - Launch Databricks workspace `earthquake-db`
@@ -110,12 +115,14 @@ We implement a **medallion architecture** to structure and organize data effecti
    5. Click `Create compute`
 <br/>
 
-![](./Compute.png)
+![](./images/Compute.png)
 
-
+<br/>
 
 ## 6) Security Architecture
-  ![](./sec-db-to-sa-and-df.png)  
+  ![](./images/sec-db-to-sa-and-df.png)  
+
+<br/>
 
 ## 7) Setup Secure Connection for Databricks (DB <----- ADLS)
   ### Create a Credential (to be used for an external location)
@@ -127,9 +134,9 @@ We implement a **medallion architecture** to structure and organize data effecti
      - COPY Resource ID : `/subscriptions/ca8b577e-..accessConnectors/unity-catalog-access-connector`
 <br/>
 
-![](./sec-db.png)
+![](./images/sec-db.png)
 
-  
+
   ### Create External Locations
   1. `Catalog` → `External Data` → `Create external location`
   2. Create 3 External Locations for all Medallion Stages
@@ -147,8 +154,9 @@ We implement a **medallion architecture** to structure and organize data effecti
         3. Storage Credential: `earthqual-cred` (from 5.3)
   <br/>
   
-  ![](./ExternalLocations.png)
+  ![](./images/ExternalLocations.png)
 
+<br/>
 
 ## 8) Setup Secure Connection for ADLS (DB -----> ADLS)
   1. Azure portal → `storage accont` → `Access Control (IAM)` → `Role assignments` → `Add` 
@@ -160,8 +168,9 @@ We implement a **medallion architecture** to structure and organize data effecti
   5. `Select` → `Review and Assign`
 <br/>
 
-![](./sec-sa.png)
+![](./images/sec-sa.png)
 
+<br/>
 
 ## 9) Set Up Databricks
 1. Azure portal → Launch Databricks workspace `earthquake-db`
@@ -475,8 +484,9 @@ df_with_location_sig_class.write.mode('append').parquet(gold_output_path)
  2. New parquee file created **part-00000-tid-8139..**
 <br/>
 
-![](./parquee-files-in-gold.png)
+![](./images/parquee-files-in-gold.png)
 
+<br/>
 
 ## 11) Datafactory Deployment
   1. Launch the ADF studio and create a pipeline:
@@ -491,8 +501,8 @@ df_with_location_sig_class.write.mode('append').parquet(gold_output_path)
   5. Schedule the pipeline to run at desired intervals (e.g., daily).
 
 
-## 10) Data Factory Architecture 
-<br/>
-  
-  ![](./sec-db-to-df.png)
+## 11) Data Factory Architecture
 
+![](./images/sec-db-to-df.png)
+
+<br/>
