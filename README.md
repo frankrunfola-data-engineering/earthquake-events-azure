@@ -115,7 +115,7 @@ We implement a **medallion architecture** to structure and organize data effecti
    5. Click `Create compute`
 <br/>
 
-![](./images/Compute.png)
+![](./images/db-compute.png)
 
 <br/>
 
@@ -133,7 +133,7 @@ We implement a **medallion architecture** to structure and organize data effecti
      - Azure portal → `rg-earthquake`(resource group) → `earthquake-db` (db resource) → Managed Resource Group: `databricks-rg-earthquake-<unique>` → `unity-catalog-access-connector`
      - COPY Resource ID : `/subscriptions/ca8b577e-..accessConnectors/unity-catalog-access-connector`
 <br/>
-
+![](./images/db-credentials.png)
 ![](./images/sec-db.png)
 
 
@@ -154,7 +154,7 @@ We implement a **medallion architecture** to structure and organize data effecti
         3. Storage Credential: `earthqual-cred` (from 5.3)
   <br/>
   
-  ![](./images/ExternalLocations.png)
+  ![](./images/db-external-locs.png)
 
 <br/>
 
@@ -490,16 +490,38 @@ df_with_location_sig_class.write.mode('append').parquet(gold_output_path)
 
 ## 11) Datafactory Deployment
   1. Launch the ADF studio and create a pipeline:
-     - Drag the **Notebook** activity into the pipeline and configure it to run Databricks notebooks.
-     - Add a **Databricks Linked Service**:
-       - Use the **AutoResolveIntegrationRuntime**.
-       - Authenticate with an Access Token (recommended to store the token in a Key Vault for security).
+     - `Author` → `Pipelines` → `Databricks`
+     - Drag **Notebook** activity into the pipeline
+     - Under tab **Azure Databricks**, Add a **Databricks Linked Service**:
+       - Under **Edit linked service**
+       - **Connect via integration runtime**: AutoResolveIntegrationRuntime
+       - **Databricks workspace**: (Choose existing workspace)
+       - **Select cluster**: Existing interactive cluster
+       - **Existing cluster ID**: 1203-151008-8fg1r3qa  (OR WHATEVER IT IS)
+       - **Authenticate type**: 
+          - OPTION 1 - Access Token
+          - Navigate to Databrick → profile icon → Settings → User → Developer → Access tokens → Manage
+          - Generate new token
+          ![](./images/db-access-token.png)
+          
+          - **Access token**:
+       
+          - OPTION 2 - Key Vault Token (**Recommended For security** )
+          - Azure portal → `Key vaults`
+          - Click `Create Key vault`
+          - Choose subscription, rosource group, region, click `review and create`
+          - Under new Key Vault resource, Objects → Keys
+          - Navigate back to  Datafactory resource
+          - Back Under **Edit linked service**
+          - **AKV linked service**: 
+          - ..... TODO...
   2. Pass parameters to the pipeline:
      - For example, add parameters `start_date` and `end_date` with dynamic values using `@formatDateTime` expressions.
   3. Chain notebooks (`bronze`, `silver`, `gold`) to create a pipeline with success dependencies.
   4. Validate, publish, and run the pipeline.
   5. Schedule the pipeline to run at desired intervals (e.g., daily).
 
+![](./images/sec-db-to-df.png)
 
 ## 11) Data Factory Architecture
 
