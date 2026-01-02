@@ -480,8 +480,7 @@ df_with_location_sig_class.write.mode('append').parquet(gold_output_path)
  2. New parquee file created **part-00000-tid-8139..**
 <br/>
 
-    ![](./images/parquee-files-in-gold.png)
-
+![](./images/parquee-files-in-gold.png)
 <br/>
 
 ## 11) Datafactory Deployment
