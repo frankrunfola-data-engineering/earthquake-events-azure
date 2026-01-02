@@ -152,7 +152,6 @@ We implement a **medallion architecture** to structure and organize data effecti
         1. External location name: `gold`
         2. External location name: `abfss://gold@storeearthquake.dfs.core.windows.net/` (**endpoint to ADLS container**)
         3. Storage Credential: `earthqual-cred` (from 5.3)
-  
   <br/>
   
    ![](./images/db-external-locs.png)
@@ -521,9 +520,9 @@ df_with_location_sig_class.write.mode('append').parquet(gold_output_path)
         - Base parameters:
           - **bronze_params**: @string(activity('Bronze Notebook').output.runOutput)
           - **silver_params**: @string(activity('Silver Notebook').output.runOutput)
-  3. Chain notebooks (`bronze`, `silver`, `gold`) to create a pipeline with success dependencies.
-  4. Validate, publish, and run the pipeline.
-  5. Schedule the pipeline to run at desired intervals (e.g., daily).
+   3. Chain notebooks (`bronze`, `silver`, `gold`) to create a pipeline with success dependencies.
+   4. Validate, publish, and run the pipeline.
+   5. Schedule the pipeline to run at desired intervals (e.g., daily).
   <br/>
   
 ![](./images/df-bronze-deploy.png)
