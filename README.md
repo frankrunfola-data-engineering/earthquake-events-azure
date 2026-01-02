@@ -132,8 +132,8 @@ We implement a **medallion architecture** to structure and organize data effecti
      - Azure portal → `rg-earthquake`(resource group) → `earthquake-db` (db resource) → Managed Resource Group: `databricks-rg-earthquake-<unique>` → `unity-catalog-access-connector`
      - COPY Resource ID : `/subscriptions/ca8b577e-..accessConnectors/unity-catalog-access-connector`
 <br/>
-![](./images/db-credentials.png)
-![](./images/sec-db.png)
+  ![](./images/db-credentials.png)
+  ![](./images/sec-db.png)
 
 
   ### Create External Locations
@@ -153,7 +153,7 @@ We implement a **medallion architecture** to structure and organize data effecti
         3. Storage Credential: `earthqual-cred` (from 5.3)
   <br/>
 
-        ![](./images/db-external-locs.png)
+  ![](./images/db-external-locs.png)
 
 <br/>
 
@@ -167,7 +167,7 @@ We implement a **medallion architecture** to structure and organize data effecti
   5. `Select` → `Review and Assign`
 <br/>
 
-     ![](./images/sec-sa.png)
+  ![](./images/sec-sa.png)
 
 <br/>
 
@@ -526,9 +526,9 @@ df_with_location_sig_class.write.mode('append').parquet(gold_output_path)
   6. Schedule the pipeline to run at desired intervals (e.g., daily).
   <br/>
   
-     ![](./images/df-bronze-deploy.png)
-     ![](./images/df-silver-deploy.png)
-     ![](./images/df-gold-deploy.png)
+ ![](./images/df-bronze-deploy.png)
+ ![](./images/df-silver-deploy.png)
+ ![](./images/df-gold-deploy.png)
 
 ## 11) Data Factory Architecture
 <br/>
