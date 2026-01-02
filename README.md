@@ -115,7 +115,7 @@ We implement a **medallion architecture** to structure and organize data effecti
    5. Click `Create compute`
 <br/>
 
-       ![](./images/db-compute.png)
+  ![](./images/db-compute.png)
 
 <br/>
 
