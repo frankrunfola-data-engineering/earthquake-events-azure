@@ -129,9 +129,10 @@ We implement a **medallion architecture** to structure and organize data effecti
   2. Credential type: `Azure Managed Identity`
   3. Credential name: `earthqual-cred`
   4. Access connector ID: `/subscriptions/ca8b577e-..accessConnectors/unity-catalog-access-connector` (**FOUND BELOW**)
-     - Azure portal → `rg-earthquake`(resource group) → `earthquake-db` (db resource) → Managed Resource Group: `databricks-rg-earthquake-<unique>` → `unity-catalog-access-connector`
+     - Azure portal → `rg-earthquake`(resource group) → `earthquake-db` (db resource) → (in middle of screen) Managed Resource Group: `databricks-rg-earthquake-<unique>` → `unity-catalog-access-connector`
      - COPY Resource ID : `/subscriptions/ca8b577e-..accessConnectors/unity-catalog-access-connector`
 <br/>
+
   ![](./images/db-credentials.png)
   ![](./images/sec-db.png)
 
