@@ -41,7 +41,7 @@ Thumbs.db
 # =========================
 data/bronze/*.parquet
 data/bronze/*.csv
-!data/bronze/movies_raw.csv
+!data/bronze/*.earthquake_data.json
 
 data/silver/*.parquet
 data/gold/*.parquet
