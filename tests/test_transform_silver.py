@@ -1,13 +1,12 @@
 from __future__ import annotations
 
-from datetime import datetime, timezone
+from datetime import date
 
 import pandas as pd
+from earthquake.transform.silver import raw_JSON_to_silver_df
 
-from earthquake.transform.silver import features_to_silver_df
 
-
-def test_features_to_silver_df_basic_columns():
+def test_raw_JSON_to_silver_df_basic_columns():
     features = [
         {
             "id": "abc123",
@@ -16,21 +15,45 @@ def test_features_to_silver_df_basic_columns():
                 "time": 1730000000000,
                 "mag": 4.2,
                 "place": "Somewhere",
-                "sig": 250,
+                "title": "M 4.2 - Somewhere",
+                "url": "https://example.com/event/abc123",
+                "sig": 250,  # ok to include; function just ignores it
             },
         }
     ]
 
-    df = features_to_silver_df(features)
-    assert list(df.columns) == ["id", "longitude", "latitude", "elevation", "time", "mag", "place", "sig"]
+    run_date = date.today()
+    bronze_dict = {"features": features}
+    df = raw_JSON_to_silver_df(bronze_dict, run_date=run_date)
+
+    expected_cols = [
+        "event_id",
+        "event_time_utc",
+        "event_date",
+        "magnitude",
+        "place",
+        "title",
+        "url",
+        "longitude",
+        "latitude",
+        "depth_km",
+        "run_date",
+    ]
+    assert list(df.columns) == expected_cols
     assert len(df) == 1
-    assert df.loc[0, "id"] == "abc123"
+
+    assert df.loc[0, "event_id"] == "abc123"
     assert df.loc[0, "longitude"] == -118.5
     assert df.loc[0, "latitude"] == 34.2
-    assert df.loc[0, "elevation"] == 10.0
-    assert pd.notna(df.loc[0, "time"])
+    assert df.loc[0, "depth_km"] == 10.0
+    assert df.loc[0, "magnitude"] == 4.2
+
+    assert pd.notna(df.loc[0, "event_time_utc"])
+    assert pd.notna(df.loc[0, "event_date"])
+    assert df.loc[0, "run_date"] == run_date.isoformat()
 
 
-def test_features_to_silver_df_empty_returns_empty_df():
-    df = features_to_silver_df([])
-    assert len(df) == 0
+def test_raw_JSON_to_silver_df_empty_returns_empty_df():
+    bronze = {"features": []}
+    df = raw_JSON_to_silver_df(bronze, run_date=date.today())
+    assert df.empty

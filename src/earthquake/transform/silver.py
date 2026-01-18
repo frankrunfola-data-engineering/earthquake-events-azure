@@ -26,7 +26,7 @@ def _utc_date(iso_ts: str | None) -> str | None:
         return None
 
 
-def features_to_silver_df(bronze: dict, *, run_date: date_type) -> pd.DataFrame:
+def raw_JSON_to_silver_df(bronze: dict, *, run_date: date_type) -> pd.DataFrame:
     """
     Flatten USGS GeoJSON -> tabular "silver" dataframe.
     """

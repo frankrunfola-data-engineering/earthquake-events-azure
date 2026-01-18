@@ -59,10 +59,10 @@ earthquake-medallion-pipeline/
 │     ├─ config.py                    # Reads env vars and provides PipelineConfig
 │     │
 │     ├─ extract/                     # Getting raw data (Bronze)
-│     │  └─ usgs.py                   # fetch_features() hits USGS API and returns GeoJSON
+│     │  └─ usgs.py                   # get_API_data() hits USGS API and returns GeoJSON
 │     │
 │     ├─ transform/                   # Cleaning/flattening (Silver)
-│     │  └─ silver.py                 # features_to_silver_df() → normalized dataframe
+│     │  └─ silver.py                 # raw_JSON_to_silver_df() → normalized dataframe
 │     │
 │     ├─ enrich/                      # Aggregations/analytics (Gold)
 │     │  └─ gold.py                   # silver_to_gold_df() → daily rollups

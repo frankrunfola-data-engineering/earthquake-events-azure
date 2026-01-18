@@ -1,33 +1,36 @@
 # src/earthquake/app.py
 from __future__ import annotations
 
-import os
-
 from dotenv import load_dotenv
-
 from .config import PipelineConfig
-from .logging_utils import configure_logging
+from .logging import configure_logging
 from .pipeline import run_pipeline
 
 
 def main(argv: list[str] | None = None) -> int:
-    """
-    No CLI parsing. No overrides.
-    Everything comes from env/.env via PipelineConfig.from_env().
-    """
-    load_dotenv(override=False)
+    """ Everything comes from env/.env via PipelineConfig.from_env(). """
+    
+    load_dotenv(override=False)  # Parse .env file and load all nev vars.
 
-    cfg = PipelineConfig.from_env()
-
-    # Logging: prefer config.log_level if you have it, else LOG_LEVEL env, else INFO.
-    log_level = getattr(cfg, "log_level", None) or os.getenv("LOG_LEVEL", "INFO")
+    #set configuration and logging
+    config = PipelineConfig.from_env()
+    log_level = config.get_log_level()
     logger = configure_logging(log_level)
+    config.print_config(logger)
+    
+    #======================================
+    # main program entry point
+    #======================================
+    result = run_pipeline(config=config,logger=logger)
 
-    result = run_pipeline(config=cfg)
-
-    logger.info("Run date: %s", result.run_date.isoformat())
-    logger.info("Bronze records: %s", result.records_bronze)
-    logger.info("Silver records: %s", result.records_silver)
-    logger.info("Gold records: %s", result.records_gold)
+    logger.info("")
+    logger.info("-----------------------------------------------------")
+    logger.info("Pipeline Results")
+    logger.info("-----------------------------------------------------")
+    logger.info(f"  {'Run date':<15}: {result.run_date.isoformat()}")
+    logger.info(f"  {'Bronze records':<15}: {result.records_bronze:<8}")
+    logger.info(f"  {'Silver records':<15}: {result.records_silver:<8}")
+    logger.info(f"  {'Gold records':<15}: {result.records_gold:<8}")
+    logger.info("")
 
     return 0

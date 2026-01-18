@@ -11,5 +11,5 @@ graph LR
 
 ## Key design choices
 - **Low coupling**: extraction, transforms, enrichment, and I/O are separate modules.
-- **Pure transforms**: `features_to_silver_df` is I/O-free for easy testing.
+- **Pure transforms**: `raw_JSON_to_silver_df` is I/O-free for easy testing.
 - **Offline enrichment**: country code enrichment uses `reverse_geocoder` (no external calls).

@@ -1,25 +1,23 @@
 from __future__ import annotations
-
 import logging
 
 
-def configure_logging(level: str | int = "INFO") -> logging.Logger:
+def configure_logging(log_level: str | int = "INFO") -> logging.Logger:
     """Configure a consistent logger for CLI + notebooks.
 
     Safe to call multiple times.
     """
-
     logger = logging.getLogger("earthquake")
     if logger.handlers:
         return logger
 
-    if isinstance(level, str):
-        level_upper = level.strip().upper()
+    if isinstance(log_level, str):
+        level_upper = log_level.strip().upper()
         numeric_level = logging.getLevelName(level_upper)
         if isinstance(numeric_level, str):
             numeric_level = logging.INFO
     else:
-        numeric_level = int(level)
+        numeric_level = int(log_level)
 
     logger.setLevel(numeric_level)
     handler = logging.StreamHandler()

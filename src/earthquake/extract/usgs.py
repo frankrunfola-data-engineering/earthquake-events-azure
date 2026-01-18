@@ -7,7 +7,7 @@ from urllib.parse import urlencode
 from urllib.request import Request, urlopen
 
 
-def fetch_features(*, base_url: str, start_date: date, end_date: date) -> dict:
+def get_API_data(*, base_url: str, start_date: date, end_date: date) -> dict:
     """
     Fetch USGS earthquake GeoJSON for a date window.
     """

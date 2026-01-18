@@ -17,9 +17,8 @@ Run from project root:
 
 from __future__ import annotations
 from earthquake.app import main
-from pathlib import Path
 
 
 if __name__ == "__main__":
-    exit_code = main() # run src/earthquake/cli.py
+    exit_code = main()            # run src/earthquake/app.py
     raise SystemExit(exit_code)
