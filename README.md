@@ -152,6 +152,7 @@ ruff format --check src tests && ruff check src tests
 ## Run in Azure
 For complete setup, view: `docs/architecture/azure.md`
 
+## Mermaid Diagram
 
 ```mermaid
 classDiagram
