@@ -1,6 +1,5 @@
 # src/earthquake/app.py
 from __future__ import annotations
-
 from dotenv import load_dotenv
 from .config import PipelineConfig
 from .logging import configure_logging
@@ -11,8 +10,9 @@ def main(argv: list[str] | None = None) -> int:
     """ Everything comes from env/.env via PipelineConfig.from_env(). """
     
     load_dotenv(override=False)  # Parse .env file and load all nev vars.
-
-    #set configuration and logging
+    #======================================
+    # set configuration and logging
+    #======================================
     config = PipelineConfig.from_env()
     log_level = config.get_log_level()
     logger = configure_logging(log_level)

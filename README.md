@@ -42,7 +42,8 @@ See: `docs/architecture.md`
 
 ## Repo layout
 ```
-earthquake-medallion-pipeline/
+earthquake/
+|
 ├─ README.md                          # You are here: setup + how to run
 ├─ pyproject.toml                     # Packaging + deps (recommended)
 ├─ .env.example                       # Example env vars (no secrets)
@@ -78,13 +79,16 @@ earthquake-medallion-pipeline/
 │  ├─ test_silver_transform.py        # Ensures GeoJSON → dataframe shape/columns
 │  └─ test_gold_rollup.py             # Ensures rollups are correct
 │
+|
 └─ data/                              # GENERATED OUTPUT (gitignored)
    ├─ bronze/
    │  └─ run_date=YYYY-MM-DD/
    │     └─ usgs_features.json        # Raw API response snapshot
+   |
    ├─ silver/
    │  └─ run_date=YYYY-MM-DD/
    │     └─ earthquakes_silver.csv    # Cleaned/flattened events
+   |
    └─ gold/
       └─ run_date=YYYY-MM-DD/
          └─ earthquakes_gold.csv      # Daily metrics (counts, max/avg magnitude, etc.)
@@ -111,7 +115,7 @@ source .venv/Scripts/activate        #Activate venv (PWSH: source .venv/bin/acti
 python -m pip install --upgrade pip  #Install requirements
 pip install -e .                     #Install project deps into venv
 cp .env.example .env                 #Optional: load env vars (API_BASE_URL, OUTPUT_DIR)
-python -m scripts.run                #Run (defaults to yesterday->today)  --log-level INFO
+python -m earthquake                 #Run (defaults to yesterday->today)  --log-level INFO
 ```
 
 Outputs land in `data/bronze`, `data/silver`, `data/gold`.
