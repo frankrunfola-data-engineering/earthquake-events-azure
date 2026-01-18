@@ -46,6 +46,7 @@ earthquake/
 |
 ├─ README.md                          # You are here: setup + how to run
 ├─ pyproject.toml                     # Packaging + deps (recommended)
+├─ .pre-commit-config.yaml
 ├─ .env.example                       # Example env vars (no secrets)
 ├─ .gitignore                         # Ignore venv, data outputs, cache, etc.
 │
@@ -110,12 +111,19 @@ earthquake/
 
 ## Run Locally
 ```bash
-python -m venv .venv                 #Create venv:
-source .venv/Scripts/activate        #Activate venv (PWSH: source .venv/bin/activate)
-python -m pip install --upgrade pip  #Install requirements
-pip install -e .                     #Install project deps into venv
-cp .env.example .env                 #Optional: load env vars (API_BASE_URL, OUTPUT_DIR)
-python -m earthquake                 #Run (defaults to yesterday->today)  --log-level INFO
+python -m venv .venv                 # Create venv
+source .venv/Scripts/activate        # Activate venv (PWSH: .\.venv\Scripts\Activate.ps1) (bash/zsh: source .venv/bin/activate)
+python -m pip install --upgrade pip  # Upgrade pip
+pip install -e .                     # Install project deps into venv
+cp .env.example .env                 # Optional: load env vars (API_BASE_URL, OUTPUT_DIR)
+
+# Code quality (recommended before running / before pushing)
+pip install -U ruff                  # Install linter/formatter
+ruff format .                        # Format code
+ruff check . --fix                   # Lint + auto-fix safe issues
+ruff format --check . && ruff check .  # CI-style check (no changes)
+
+python -m earthquake                 # Run (defaults to yesterday->today) --log-level INFO
 ```
 
 Outputs land in `data/bronze`, `data/silver`, `data/gold`.
@@ -126,5 +134,110 @@ Environment variables (via `.env`):
 - `OUTPUT_DIR` (default: `data`)
 - `LOOKBACK_DAYS` (default: `1`)
 
+## Linting (Ruff)
+
+Ruff is used for formatting + linting.
+
+```bash
+# Format
+ruff format src tests
+
+# Lint (auto-fix safe issues)
+ruff check src tests --fix
+
+# CI-style check (no changes allowed)
+ruff format --check src tests && ruff check src tests
+```
+
 ## Run in Azure
- For complete setup, view `../docs/architecture/azure.mdg)`
+For complete setup, view: `docs/architecture/azure.md`
+
+
+```mermaid
+classDiagram
+  direction LR
+
+  class PipelineConfig {
+    +str base_url
+    +Path output_dir
+    +int lookback_days
+    +str log_level
+    +from_env() PipelineConfig
+    +get_log_level() str
+    +print_config(logger) None
+  }
+
+  class MedallionPaths {
+    +Path root_dir
+    +Path bronze_dir
+    +Path silver_dir
+    +Path gold_dir
+  }
+
+  class PipelineResult {
+    +date run_date
+    +MedallionPaths paths
+    +int records_bronze
+    +int records_silver
+    +int records_gold
+  }
+
+  class app_py {
+    <<module>>
+    +main(argv) int
+  }
+
+  class logging_py {
+    <<module>>
+    +configure_logging(log_level) Logger
+  }
+
+  class pipeline_py {
+    <<module>>
+    +run_pipeline(config, logger) PipelineResult
+    +bronze_count(payload) int
+  }
+
+  class paths_py {
+    <<module>>
+    +build_paths(output_dir, run_date, logger) MedallionPaths
+  }
+
+  class usgs_py {
+    <<module>>
+    +get_API_data(base_url, start_date, end_date) dict
+  }
+
+  class silver_py {
+    <<module>>
+    +raw_JSON_to_silver_df(bronze, run_date) DataFrame
+  }
+
+  class gold_py {
+    <<module>>
+    +silver_to_gold_df(silver_df) DataFrame
+  }
+
+  class fs_py {
+    <<module>>
+    +write_json(obj, path, logger) None
+    +write_csv(df, path, logger) None
+  }
+
+  app_py --> PipelineConfig : creates
+  app_py --> logging_py : calls
+  app_py --> pipeline_py : calls
+
+  pipeline_py --> paths_py : calls
+  paths_py --> MedallionPaths : returns
+
+  pipeline_py --> usgs_py : calls
+  pipeline_py --> silver_py : calls
+  pipeline_py --> gold_py : calls
+
+  pipeline_py --> fs_py : writes outputs
+  pipeline_py --> PipelineResult : returns
+
+  PipelineResult --> MedallionPaths : contains
+
+```

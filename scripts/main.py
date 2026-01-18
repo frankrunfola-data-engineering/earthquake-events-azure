@@ -1,4 +1,4 @@
-""" 
+"""
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 File:    run.py
 Author:  Frank Runfola
@@ -16,9 +16,9 @@ Run from project root:
 """
 
 from __future__ import annotations
+
 from earthquake.app import main
 
-
 if __name__ == "__main__":
-    exit_code = main()            # run src/earthquake/app.py
+    exit_code = main()  # run src/earthquake/app.py
     raise SystemExit(exit_code)

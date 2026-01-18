@@ -1,7 +1,8 @@
 # src/earthquake/transform/silver.py
 from __future__ import annotations
 
-from datetime import datetime, timezone, date as date_type
+from datetime import UTC, datetime
+from datetime import date as date_type
 from typing import Any
 
 import pandas as pd
@@ -11,7 +12,7 @@ def _ms_to_utc_iso(ms: Any) -> str | None:
     if ms is None:
         return None
     try:
-        dt = datetime.fromtimestamp(int(ms) / 1000.0, tz=timezone.utc)
+        dt = datetime.fromtimestamp(int(ms) / 1000.0, tz=UTC)
         return dt.isoformat()
     except Exception:
         return None

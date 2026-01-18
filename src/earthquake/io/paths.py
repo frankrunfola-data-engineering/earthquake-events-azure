@@ -1,9 +1,9 @@
 # src/earthquake/io/paths.py
 from __future__ import annotations
 
-from logging import Logger
 from dataclasses import dataclass
 from datetime import date
+from logging import Logger
 from pathlib import Path
 
 
@@ -15,7 +15,7 @@ class MedallionPaths:
     gold_dir: Path
 
 
-def build_paths(*, output_dir: Path, run_date: date, logger:Logger) -> MedallionPaths:
+def build_paths(*, output_dir: Path, run_date: date, logger: Logger) -> MedallionPaths:
     """
     Standard medallion layout with run partitioning:
       <output_dir>/<layer>/run_date=YYYY-MM-DD/
@@ -27,8 +27,8 @@ def build_paths(*, output_dir: Path, run_date: date, logger:Logger) -> Medallion
     logger.info(f"  {'bronze path':<15}: {bronze_dir}")
     logger.info(f"  {'silver path':<15}: {silver_dir}")
     logger.info(f"  {'golder path':<15}: {gold_dir}")
-    logger.info(f"")
-    
+    logger.info("")
+
     return MedallionPaths(
         root_dir=output_dir,
         bronze_dir=bronze_dir,

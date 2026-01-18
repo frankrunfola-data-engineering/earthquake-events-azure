@@ -1,8 +1,10 @@
 from __future__ import annotations
 
 from datetime import date
+from typing import Any
 
 import pandas as pd
+
 from earthquake.transform.silver import raw_JSON_to_silver_df
 
 
@@ -54,6 +56,6 @@ def test_raw_JSON_to_silver_df_basic_columns():
 
 
 def test_raw_JSON_to_silver_df_empty_returns_empty_df():
-    bronze = {"features": []}
+    bronze: dict[str, Any] = {"features": []}
     df = raw_JSON_to_silver_df(bronze, run_date=date.today())
     assert df.empty

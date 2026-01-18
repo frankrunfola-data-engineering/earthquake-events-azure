@@ -1,13 +1,13 @@
-# src/earthquake/extract/usgs.py
 from __future__ import annotations
 
 import json
 from datetime import date
+from typing import Any
 from urllib.parse import urlencode
 from urllib.request import Request, urlopen
 
 
-def get_API_data(*, base_url: str, start_date: date, end_date: date) -> dict:
+def get_API_data(*, base_url: str, start_date: date, end_date: date) -> dict[str, Any]:
     """
     Fetch USGS earthquake GeoJSON for a date window.
     """
@@ -22,4 +22,8 @@ def get_API_data(*, base_url: str, start_date: date, end_date: date) -> dict:
     with urlopen(req, timeout=30) as resp:
         payload = resp.read().decode("utf-8")
 
-    return json.loads(payload)
+    data = json.loads(payload)
+    if not isinstance(data, dict):
+        raise TypeError(f"Expected USGS response to be a JSON object, got {type(data).__name__}")
+
+    return data
