@@ -1,4 +1,4 @@
-# Earthquake Pipeline (USGS) — Medallion Demo
+# Earthquake Events (USGS) — Medallion Demo
 
 ## Introduction
 This guide walks you through creating a scalable data pipeline in Azure, transforming raw data into meaningful insights using Databricks, Azure Data Factory (ADF), and Synapse Analytics.
